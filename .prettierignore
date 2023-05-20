@@ -1,0 +1,7 @@
+.idea
+.output/
+.next/
+
+dist/
+
+package-lock.json
