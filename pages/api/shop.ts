@@ -46,7 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     attachments: [
       {
         filename: 'PGL-QR-Einzahlungsschein.pdf',
-        path: './public/PGL-QR-Einzahlung.pdf'
+        path: 'https://github.com/froko/pgl-api/blob/main/public/PGL-QR-Einzahlung.pdf'
       }
     ]
   };
