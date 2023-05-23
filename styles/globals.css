@@ -38,7 +38,7 @@ h2 {
 }
 
 .container {
-  @apply mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12 lg:max-w-4xl lg:px-8 lg:py-16 xl:max-w-6xl;
+  @apply mx-auto max-w-3xl px-4 pt-10 sm:px-6 lg:max-w-4xl lg:px-8 xl:max-w-6xl;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
