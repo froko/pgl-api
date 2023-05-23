@@ -29,20 +29,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
   });
 
+  const payload = JSON.parse(req.body);
+
   const shopMail = {
     from: '"PGL Shop" noreply@pgl.ch',
-    to: ['froko@frokonet.ch'],
-    //to: ['info@pglch'],
-    //bcc: ['froko@frokonet.ch'],
+    to: ['info@pglch'],
+    bcc: ['froko@frokonet.ch'],
     subject: `Neue Bestellung im PGL Shop`,
-    html: req.body.shopMessage
+    html: payload.shopMessage
   };
 
   const customerMail = {
     from: '"PGL Shop" noreply@pgl.ch',
-    to: [req.body.email],
+    to: [payload.email],
     subject: `Deine Bestellung im PGL Shop`,
-    html: req.body.customerMessage,
+    html: payload.customerMessage,
     attachments: [
       {
         filename: 'PGL-QR-Einzahlungsschein.pdf',

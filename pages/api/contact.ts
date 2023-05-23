@@ -28,14 +28,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       pass: MAIL_PASSWORD
     }
   });
+  
+  const payload = JSON.parse(req.body);
 
   const contactMail = {
     from: '"PGL Kontaktformular" noreply@pgl.ch',
-    to: ['froko@frokonet.ch'],
-    //to: ['info@pglch'],
-    //bcc: ['froko@frokonet.ch'],
-    subject: `Neue Nachricht von ${req.body.name} (${req.body.email})`,
-    text: req.body.message
+    to: ['info@pglch'],
+    bcc: ['froko@frokonet.ch'],
+    subject: `Neue Nachricht von ${payload.name} (${payload.email})`,
+    text: payload.message
   };
 
   try {
