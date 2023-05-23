@@ -1,3 +1,4 @@
+import { Octokit } from '@octokit/core';
 import React, { useState } from 'react';
 
 export const Deploy = () => {
@@ -8,39 +9,40 @@ export const Deploy = () => {
 
   const deployToNetlify = (e: React.MouseEvent) => {
     e.preventDefault();
-    const url = process.env.NEXT_PUBLIC_NETLIFY_URL!;
+    setStatus('Bitte warten...');
 
+    const url = process.env.NEXT_PUBLIC_NETLIFY_URL!;
     const requestOptions = {
       method: 'POST',
       headers: {},
       body: JSON.stringify('')
     };
 
-    setStatus('Bitte warten...');
     fetch(url, requestOptions).then(
       () => setStatus(success('https://pgl-preview.netlify.app')),
       (reason) => setStatus(failure(reason))
     );
   };
 
-  const deployToProduction = (e: React.MouseEvent) => {
+  const deployToProduction = async (e: React.MouseEvent) => {
     e.preventDefault();
-    const url = process.env.NEXT_PUBLIC_GITHUB_URL!;
-
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        authoriyation: process.env.NEXT_PUBLIC_GITHUB_TOKEN!,
-        accept: 'application/vnd.github.everest-preview+json'
-      },
-      body: JSON.stringify({ event_type: 'Deployment from deploy.pgl.ch' })
-    };
-
     setStatus('Bitte warten...');
-    fetch(url, requestOptions).then(
-      () => setStatus(success('https://pgl.ch')),
-      (reason) => setStatus(failure(reason))
-    );
+
+    const octokit = new Octokit({ auth: process.env.NEXT_PUBLIC_GITHUB_TOKEN });
+    await octokit
+      .request('POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches', {
+        owner: 'froko',
+        repo: 'pgl-homepage',
+        workflow_id: 'node.js.yml',
+        ref: 'main',
+        headers: {
+          'X-GitHub-Api-Version': '2022-11-28'
+        }
+      })
+      .then(
+        () => setStatus(success('https://pgl.ch')),
+        (reason) => setStatus(failure(reason))
+      );
   };
 
   const buttonStyles =
