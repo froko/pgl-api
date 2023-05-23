@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       pass: MAIL_PASSWORD
     }
   });
-  
+
   const payload = JSON.parse(req.body);
 
   const contactMail = {
