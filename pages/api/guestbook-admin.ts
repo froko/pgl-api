@@ -6,9 +6,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   if (req.method === 'GET') {
     const entries = await prisma.guestbookEntry.findMany({
-      where: {
-        published: true
-      },
       orderBy: {
         createdAt: 'desc'
       }
@@ -16,15 +13,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     res.status(200).json(entries);
   }
 
-  if (req.method === 'POST') {
+  if (req.method === 'PUT') {
     const entry = JSON.parse(req.body);
     prisma.guestbookEntry
-      .create({
+      .update({
+        where: {
+          id: entry.id
+        },
         data: {
-          name: entry.name,
-          email: entry.email,
-          message: entry.message,
-          published: true
+          published: entry.published
+        }
+      })
+      .then(() => res.status(200).json({}));
+  }
+
+  if (req.method === 'DELETE') {
+    const entry = JSON.parse(req.body);
+    prisma.guestbookEntry
+      .delete({
+        where: {
+          id: entry.id
         }
       })
       .then(() => res.status(200).json({}));

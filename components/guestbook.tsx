@@ -14,7 +14,7 @@ const GuestbookEntry = (props: { entry: GuestbookEntry; reload: () => void }) =>
       body: JSON.stringify({ ...entry, published: !published })
     };
 
-    await fetch('api/guestbook', requestOptions);
+    await fetch('api/guestbook-admin', requestOptions);
   };
 
   const deleteEntry = async () => {
@@ -24,7 +24,7 @@ const GuestbookEntry = (props: { entry: GuestbookEntry; reload: () => void }) =>
       body: JSON.stringify({ entry })
     };
 
-    fetch('api/guestbook', requestOptions).then(() => reload());
+    fetch('api/guestbook-admin', requestOptions).then(() => reload());
   };
 
   const createdAt = new Date(entry.createdAt).toLocaleDateString('de-CH', {
@@ -37,7 +37,7 @@ const GuestbookEntry = (props: { entry: GuestbookEntry; reload: () => void }) =>
     <>
       <div className={`w-full text-white rounded-t-md flex px-4 py-2 ${published ? 'bg-pgl-blue' : 'bg-slate-600'}`}>
         <span>
-          <b>{entry.name}</b> schrieb am {createdAt}
+          <b>{entry.name}</b> ({entry.email}) schrieb am {createdAt}
         </span>
         <div className="flex-grow"></div>
         {published ? (
@@ -62,7 +62,7 @@ export const Guestbook = () => {
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
 
   async function getEntries() {
-    const response = await fetch('api/guestbook');
+    const response = await fetch('api/guestbook-admin');
     const guestbookEntries = await response.json();
     setEntries(guestbookEntries);
   }
