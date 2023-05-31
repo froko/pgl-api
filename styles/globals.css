@@ -23,18 +23,12 @@ a {
   @apply no-underline;
 }
 
-h1,
-h2,
-h3 {
+h1 {
   @apply text-pgl-blue;
 }
 
 h1 {
-  @apply mb-8 mt-12;
-}
-
-h2 {
-  @apply mb-6 mt-8;
+  @apply mb-8 mt-4;
 }
 
 .container {

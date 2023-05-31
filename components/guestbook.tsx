@@ -59,6 +59,7 @@ const GuestbookEntry = (props: { entry: GuestbookEntry; reload: () => void }) =>
 };
 
 export const Guestbook = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
 
   async function getEntries() {
@@ -68,13 +69,14 @@ export const Guestbook = () => {
   }
 
   useEffect(() => {
-    getEntries();
+    getEntries().then(() => setLoading(false));
   }, []);
 
   return (
     <div className="container">
       <article>
         <h1>G&auml;stebuch</h1>
+        {loading && <p>Bitte warten...</p>}
         {entries.map((e: any) => (
           <GuestbookEntry entry={e} key={e.id} reload={getEntries} />
         ))}
