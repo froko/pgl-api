@@ -2,6 +2,11 @@ import { PrismaClient } from '@prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
+  if (req.method !== 'GET' && req.method !== 'PUT' && req.method !== 'DELETE') {
+    res.status(405).json({ result: 'Method not allowed' });
+    return;
+  }
+
   const prisma = new PrismaClient();
 
   if (req.method === 'GET') {
