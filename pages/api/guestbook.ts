@@ -50,7 +50,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
       const contactMail = {
         from: '"PGL Gästebuch" noreply@pgl.ch',
-        to: ['froko@frokonet.ch'],
+        to: ['brm@bica.ch', 'manuelbrun@bluewin.ch'],
+        bcc: ['froko@frokonet.ch'],
         subject: `Neuer Eintrag von ${entry.name} (${entry.email})`,
         text: entry.message
       };

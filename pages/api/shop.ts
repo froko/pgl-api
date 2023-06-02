@@ -33,9 +33,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
   const shopMail = {
     from: '"PGL Shop" noreply@pgl.ch',
-    //to: ['info@pglch'],
-    //bcc: ['froko@frokonet.ch'],
-    to: ['froko@frokonet.ch'],
+    to: ['info@pglch'],
+    bcc: ['froko@frokonet.ch'],
     subject: `Neue Bestellung im PGL Shop`,
     html: payload.shopMessage
   };
